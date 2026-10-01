@@ -181,7 +181,7 @@ df %>%
 
 ```{r}
 df %>%
-  filter(month %in% c(10, 11), weekend == "Weekend") %>%
+  filter(month %in% c(10, 11), weekend == "Weekend", year(date) == 2020)%>%
   group_by(month) %>%
   summarise(positive_increase = median(positiveIncrease, na.rm = TRUE))
 ```
@@ -222,7 +222,7 @@ data %>%
 # Question 15 - Find the median cases by weekdays in Rhode Island in 2021
 
 data %>%
-  filter(state == "RI",
+  filter(state == "Rhode Island",
          year(date) == 2021) %>%
   mutate(weekday = wday(date, label = TRUE)) %>%
   group_by(weekday) %>%
