@@ -8,3 +8,5 @@ Assignments for class:
 [Assignment 4 Extra Credit](assignment4_extra_credits.html)
 [Assignment 5](assignment5_part1.html)
 [Assignment 6](assignment6.html)
+[Link to the plot](abc.png)
+[Assignment 7](assignment7.html)
