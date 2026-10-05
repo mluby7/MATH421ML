@@ -11,3 +11,4 @@ Assignments for class:
 [Link to the plot](abc.png)
 [Assignment 7](assignment7.html)
 [Assignment 8](assignment8.html)
+[Assignment 9](assignment9.html)
