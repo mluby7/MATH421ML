@@ -137,7 +137,8 @@ geom_boxplot(mapping = aes(x = factor(month(date)),y = hospitalizedCurrently))
 
 ```{r}
 df %>%
-  ggplot() +geom_bar(aes(x = factor(year(date)), fill = state),position = "dodge"
+  filter(state %in% c("RI", "MA", "CT", "NH")) %>%
+  ggplot() + geom_bar(aes(x = factor(year(date)), fill = state),position = "dodge"
   )
 ```
 
