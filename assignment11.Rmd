@@ -42,15 +42,13 @@ Train and Test a decision tree and a random forest with caret. Plot the variable
 library(caret)
 # Set the target variable
 df <- df %>% rename(target=diabetes)
-
+df <- df %>% 
+  mutate(target = as.factor(target))
 splitIndex <- createDataPartition(df$target, p = .80, 
                                   list = FALSE)
 df_train <- df[ splitIndex,]
 df_test <- df[-splitIndex,]
 
-
-df <- df %>% 
-  mutate(target = as.factor(target))
 #Decision Tree 
 model1 <- train(target~., data=df_train, 
                 method = "rpart2",

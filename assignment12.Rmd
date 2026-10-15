@@ -27,6 +27,28 @@ knitr::opts_chunk$set(message = FALSE)
 1. Use the `PimaIndiansDiabetes` dataset. Use 15% data for testing. Use cross-validation with of 7 folds to tune random forest `(method='ranger')`.  What are the parameters that produce the greatest accuracy? What is the testing accuracy. 
 
 ```{r}
+library(caret)
+library(mlbench)
+library(tidyverse)
+data(PimaIndiansDiabetes)
+df <- tibble(PimaIndiansDiabetes)
+
+
+df <- df %>% rename(target=diabetes)
+df <- df %>% 
+  mutate(target = as.factor(target))
+splitIndex <- createDataPartition(df$target, p = .85, 
+                                  list = FALSE)
+df_train <- df[ splitIndex,]
+df_test <- df[-splitIndex,]
+
+
+# 7 fold cross validation 
+
+
+
+
+
 
 ```
 
