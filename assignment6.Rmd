@@ -127,6 +127,13 @@ ggplot() +
 geom_boxplot(mapping = aes(x = factor(month(date)),y = hospitalizedCurrently))
 
 
+df %>% filter(state %in% c("RI")) %>%
+  filter(year(date) == '2020') %>%
+  ggplot()+
+geom_line(mapping = aes(y = hospitalized,x = month(date)))
+
+
+
 ```
 
 
