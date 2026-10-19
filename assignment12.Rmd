@@ -44,19 +44,100 @@ df_test <- df[-splitIndex,]
 
 
 # 7 fold cross validation 
+tuneGrid = expand.grid(maxdepth = 2:10)
+# Tell caret to do Approach 2. Cross-Validation
+trControl = trainControl(method = "cv",
+                         number = 7)
+# Do Approach 2 
+tree_approach2 <- train(target~., data=df_train, 
+                                method = "rpart2", 
+                                trControl = trControl,
+                                tuneGrid = tuneGrid)
+
+# Plot the results
+plot(tree_approach2)
+print(tree_approach2)
 
 
+pred <- predict(tree_approach2, df_test)
+cm <- confusionMatrix(data = pred, reference = df_test$target, positive = "pos")
+cm$overall[1]
+
+getModelInfo('ranger')$ranger$parameters
 
 
+trControl = trainControl(method = "cv",
+                         number = 7)
+tuneGrid = expand.grid(mtry = 2:4,
+                       splitrule = c('gini', 'extratrees'),
+                       min.node.size = c(1:10))
+forest_ranger <- train(target~., data=df_train, 
+                    method = "ranger", 
+                    trControl = trControl,
+                    tuneGrid = tuneGrid)
+plot(forest_ranger)
 
-
+#Accuracy
+pred <- predict(forest_ranger, df_test)
+cm <- confusionMatrix(data = pred, reference = df_test$target, positive = "pos")
+cm$overall[1]
 ```
 
 
 2. Use the `PimaIndiansDiabetes` dataset. Go to https://topepo.github.io/caret/available-models.html and pick a classification model.  Tune the classification model using cross-validation of 7 folds. 
 
 ```{r}
+library(mlbench)
+library(caret)
 
+# Load data
+data(PimaIndiansDiabetes)
+
+# Make sure target is a factor
+PimaIndiansDiabetes$target <- as.factor(PimaIndiansDiabetes$diabetes)
+
+# Remove original response variable if needed
+df <- PimaIndiansDiabetes[, c("pregnant", "glucose", "pressure",
+                              "triceps", "insulin", "mass",
+                              "pedigree", "age", "target")]
+
+# Train/Test split
+set.seed(123)
+splitIndex <- createDataPartition(df$target, p = 0.8, list = FALSE)
+
+df_train <- df[splitIndex, ]
+df_test  <- df[-splitIndex, ]
+
+# 7-fold cross-validation
+ctrl <- trainControl(
+  method = "cv",
+  number = 7
+)
+
+# Tune SVM Radial model
+set.seed(123)
+svm_model <- train(
+  target ~ .,
+  data = df_train,
+  method = "svmRadial",
+  trControl = ctrl,
+  preProcess = c("center", "scale"),
+  tuneLength = 10
+)
+
+# View best tuning parameters
+svm_model
+plot(svm_model)
+
+# Predictions on test data
+pred <- predict(svm_model, newdata = df_test)
+
+# Confusion matrix and accuracy
+cm <- confusionMatrix(pred, df_test$target)
+cm
+
+# Accuracy
+cm$overall["Accuracy"]
 ```
 
 
@@ -64,6 +145,63 @@ df_test <- df[-splitIndex,]
 
 
 ```{r}
+library(mlbench)
+library(caret)
 
+# Load data
+data(PimaIndiansDiabetes)
+
+df <- PimaIndiansDiabetes
+
+# Train/Test Split
+set.seed(123)
+
+splitIndex <- createDataPartition(
+  df$diabetes,
+  p = 0.8,
+  list = FALSE
+)
+
+df_train <- df[splitIndex, ]
+df_test  <- df[-splitIndex, ]
+
+# 7-Fold Cross Validation
+ctrl <- trainControl(
+  method = "cv",
+  number = 7
+)
+
+# Model 1: KNN
+set.seed(123)
+knn_model <- train(
+  diabetes ~ .,
+  data = df_train,
+  method = "knn",
+  trControl = ctrl,
+  preProcess = c("center", "scale"),
+  tuneLength = 10
+)
+
+# Model 2: SVM Radial
+set.seed(123)
+svm_model <- train(
+  diabetes ~ .,
+  data = df_train,
+  method = "svmRadial",
+  trControl = ctrl,
+  preProcess = c("center", "scale"),
+  tuneLength = 10
+)
+
+# Compare Cross-Validation Results
+resamps <- resamples(list(
+  KNN = knn_model,
+  SVM = svm_model
+))
+
+summary(resamps)
+
+# Plot comparison
+bwplot(resamps)
 ```
 
