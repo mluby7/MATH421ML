@@ -316,7 +316,9 @@ plottwo <- ggplot(df, aes(x = sex)) +
 ggsave("plottwo.png", plottwo)
 
 # 3. Age Distribution
-plotthree <- ggplot(df, aes(x = age)) +
+plotthree <- df %>%
+  filter(sex %in% c("1", "2")) %>%
+  ggplot(aes(x = age)) +
   geom_histogram(
     bins = 30,
     fill = "steelblue",
@@ -326,7 +328,7 @@ plotthree <- ggplot(df, aes(x = age)) +
     title = "Distribution of Patient Age",
     x = "Age",
     y = "Count",
-    caption = "Patient age distribution"
+    caption = "Patient age distribution for male and female patients"
   ) +
   my_theme
 
