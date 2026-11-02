@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Midterm Project</title>
+    <meta charset="utf-8" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Midterm Project
+]
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Table of Contents
+
+1. Data Visualization 
+
+2. Predictive Models 
+
+3. Errors/Challenges
+
+4. Conclusion 
+
+
+---
+
+class: inverse, center, middle
+
+# Data Visualization
+
+---
+class: center
+# Background of Data
+- For this project, we used Rhode Island Department of Health Hospital Discharge Data. 
+- Goal of creating visuals is to gain insights and conclusions. 
+- This data has been filtered to only the year 2018. 
+
+---
+class: center 
+
+&lt;img src="plotone.png" alt="" width="70%" /&gt;
+
+
+- The image above is representing the number of patients they have admitted per month.
+- They are all relativley even with Febuary being the lowest number of patients admitted. 
+
+---
+class: center
+&lt;img src="plottwo.png" alt="" width="70%" /&gt;
+
+- This plot is comparing number of patients that are male versus the number of patients that are female
+- As shown, there is more female admitted patients than male admitted patients. 
+
+---
+
+class: center
+
+&lt;img src="plotthree.png" alt="" width="70%" /&gt;
+- This is showing the distribution of patient age.
+- It is skewed slightly toward older patients.
+- There is a lot that are at the zero marker, which could indicate that some patient ages were not recorded. 
+---
+
+class: center
+
+&lt;img src="plotfour.png" alt="" width="70%" /&gt;
+- This is showing the average patient age by the admission month
+- They are all fairly close together and we can conclude that the average patient age is not influenced by admission month. 
+
+
+
+---
+
+class: center
+
+&lt;img src="plotfive.png" alt="" width="70%" /&gt;
+
+- This plot is showing the length of stay by sex. 
+- Males have a longer average length of stay compared to females.
+
+
+---
+class: center
+
+&lt;img src="plotsix.png" alt="" width="60%" /&gt;
+
+- This graph is showing the average length of stay by season
+- We can conclude that they are all roughly the same, with Spring having the lowest average. 
+- Overall, season does not seem to have much of an impact on the length of stay.
+
+
+---
+class: center
+&lt;img src="plotseven.png" alt="" width="70%" /&gt;
+
+- This is showing the total charges by season
+- We can conclude that they are all within the same area, with winter having the lowest total charge compared to the others. 
+
+---
+class: center
+&lt;img src="ploteight.png" alt="" width="70%" /&gt;
+
+- This graph is showing the relationship between age and the length of stay. 
+- There is no linear relationship between age and length of stay according to this graph. 
+
+
+---
+class: center
+&lt;img src="plotnine.png" alt="" width="70%" /&gt;
+- This graph is breaking up the months to see the total ICU patients in the different months
+- The month of June in 2018 has the lowest amount of patients in the ICU and March of 2018 had the most in that year
+
+
+---
+class: center
+
+&lt;img src="plotten.png" alt="" width="70%" /&gt;
+- This graph is showing the top ten providers based on the patient count
+- There is a very obvious top provider, that being 7205
+
+
+---
+  
+# What Can We Conclude From Those Graphs? 
+  
+The visualizations show how admissions vary by month, differences between male and female patients, age distributions, seasonal patterns in length of stay, and variations in charges across providers. 
+
+Overall, the graphs are proving that patient characteristics and admission timing can influence hospital utilization and costs, while also helping to identify patterns and trends throughout the data set.
+
+
+---
+class: inverse, center, middle
+
+# Predictive Modeling 
+
+---
+  
+# Graphs for Total Charge Target Variable
+  
+  
+Made a Decision Tree and KNN (K-Nearest Neighbors) Model
+  - Decision Tree: makes prediction based on a series of if-then statements. Continues to follow the branches until it reaches the final one where it belongs. 
+
+  - KNN Model: Chose a value for K, calculates distance between new observation and all observations in the training data, then finds the K closest observations to make a prediction based on those neighbors. 
+  
+  
+---
+class: center
+# KNN vs. Decision Tree Comparison for Total Charge Target
+
+&lt;img src="knndtcomparison.png" alt="" width="80%" /&gt;
+
+I chose the Decision Tree because it had the higher accuracy 
+of approximately 82.29%
+  
+  
+---
+#Length of Stay Target Variable 
+- For the new target variable, I chose Length of Stay Level Variable (long vs. short)
+- Repeated the same process from previous target variable for this one 
+- Below shows the variables most influential to the length of stay 
+&lt;img src="losvariableimportance.png" alt="" width="80%" /&gt;
+---
+class: center
+# Length of Stay Target Variable 
+
+&lt;img src="losknndtcomparison.png" alt="" width="80%" /&gt;
+
+I would chose the Decision Tree because it has the higher accuracy of approximately 66.03%. 
+  
+---
+class: center
+
+#Summary of Length of Stay 
+
+The process was repeated using a new target variable based on length of stay, classifying patients into short-stay and long-stay groups. The results demonstrated that patient charcteristics like age, admission information, and provider-related variables can be useful for predicting healthcare outcomes, while model comparison helped identify the most effective predictive approach for the dataset.
+  
+  
+  
+---
+class: inverse, middle, center
+
+# Challenges 
+
+---
+class: center 
+
+# Challenges 
+- Creating plots that were all drawing different conclusions 
+  
+- Saving the comparison plots 
+  
+- Resizing the images within the presentation.
+  
+---
+class: center
+
+# Conclusion 
+
+The midterm project allowed me to make data driven conclusions, visualize what was in the data, and make predictions based on models. 
+
+---
+
+
+  
+  
+  
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -271,124 +271,193 @@ Continue with the data from part I.
 
 
 ```{r}
-#1 Number Of Patients by Admission Month
-df %>%
+library(dplyr)
+library(ggplot2)
+
+# Custom theme for all plots
+my_theme <- theme_minimal() +
+  theme(
+    plot.title = element_text(
+      hjust = 0.5,
+      face = "bold",
+      size = 14
+    ),
+    axis.title = element_text(face = "bold"),
+    plot.caption = element_text(face = "italic"),
+    panel.grid.minor = element_blank()
+  )
+
+# 1. Number of Patients by Admission Month
+plotone <- df %>%
   count(moa) %>%
   ggplot(aes(x = factor(moa), y = n)) +
-  geom_col() +
+  geom_col(fill = "steelblue") +
   labs(
     title = "Number of Patients by Admission Month",
     x = "Admission Month",
     y = "Number of Patients",
     caption = "Patient admissions by month"
-  )
+  ) +
+  my_theme
 
-#2 Number of Patients by Sex 
-ggplot(df, aes(x = sex)) +
-  geom_bar() +
+ggsave("plotone.png", plotone)
+
+# 2. Number of Patients by Sex
+plottwo <- ggplot(df, aes(x = sex)) +
+  geom_bar(fill = "steelblue") +
   labs(
     title = "Number of Patients by Sex",
     x = "Sex",
     y = "Number of Patients",
     caption = "Distribution of patients by sex"
-  )
-#3 Age Distribution 
-ggplot(df, aes(x = age)) +
-  geom_histogram(bins = 30) +
+  ) +
+  my_theme
+
+ggsave("plottwo.png", plottwo)
+
+# 3. Age Distribution
+plotthree <- ggplot(df, aes(x = age)) +
+  geom_histogram(
+    bins = 30,
+    fill = "steelblue",
+    color = "white"
+  ) +
   labs(
     title = "Distribution of Patient Age",
     x = "Age",
     y = "Count",
     caption = "Patient age distribution"
-  )
-#4 Average Age by Month 
-df %>%
+  ) +
+  my_theme
+
+ggsave("plotthree.png", plotthree)
+
+# 4. Average Age by Admission Month
+plotfour <- df %>%
   group_by(moa) %>%
-  summarise(avg_age = mean(age)) %>%
+  summarise(avg_age = mean(age, na.rm = TRUE)) %>%
   ggplot(aes(x = factor(moa), y = avg_age)) +
-  geom_col() +
+  geom_col(fill = "steelblue") +
   labs(
     title = "Average Age by Admission Month",
     x = "Admission Month",
     y = "Average Age",
     caption = "Average patient age by month"
-  )
+  ) +
+  my_theme
 
-#5 Length of Stay by Sex
-df %>%
+ggsave("plotfour.png", plotfour)
+
+# 5. Average Length of Stay by Sex
+plotfive <- df %>%
   filter(sex %in% c("1", "2")) %>%
-  ggplot(aes(x = factor(sex, labels = c("Male", "Female")),
-             y = los)) +
-  geom_boxplot() +
+  group_by(sex) %>%
+  summarise(avg_los = mean(los, na.rm = TRUE)) %>%
+  ggplot(aes(
+    x = factor(sex, labels = c("Male", "Female")),
+    y = avg_los
+  )) +
+  geom_col(fill = "steelblue") +
   labs(
-    title = "Length of Stay by Sex",
+    title = "Average Length of Stay by Sex",
     x = "Sex",
-    y = "Length of Stay",
-    caption = "Comparison of length of stay by sex"
-  )
+    y = "Average Length of Stay",
+    caption = "Comparison of average LOS by sex"
+  ) +
+  my_theme
 
-#6 Average Length of Stay by Season 
-df %>%
+ggsave("plotfive.png", plotfive)
+
+# 6. Average Length of Stay by Season
+plotsix <- df %>%
   group_by(season) %>%
-  summarise(avg_los = mean(los)) %>%
+  summarise(avg_los = mean(los, na.rm = TRUE)) %>%
   ggplot(aes(x = season, y = avg_los)) +
-  geom_col() +
+  geom_col(fill = "steelblue") +
   labs(
     title = "Average Length of Stay by Season",
     x = "Season",
     y = "Average Length of Stay",
     caption = "Average LOS across seasons"
-  )
-#7 Total Charges by Season
-df %>%
+  ) +
+  my_theme
+
+ggsave("plotsix.png", plotsix)
+
+# 7. Total Charges by Season
+plotseven <- df %>%
   group_by(season) %>%
-  summarise(total_charge = sum(total)) %>%
+  summarise(total_charge = sum(total, na.rm = TRUE)) %>%
   ggplot(aes(x = season, y = total_charge)) +
-  geom_col() +
+  geom_col(fill = "steelblue") +
   labs(
     title = "Total Charges by Season",
     x = "Season",
     y = "Total Charges",
     caption = "Hospital charges by season"
-  )
+  ) +
+  my_theme
 
-#8 Age vs. Length of Stay 
-ggplot(df, aes(x = age, y = los)) +
-  geom_point(alpha = .3) +
+ggsave("plotseven.png", plotseven)
+
+# 8. Age vs Length of Stay
+ploteight <- ggplot(df, aes(x = age, y = los)) +
+  geom_point(
+    color = "steelblue",
+    alpha = 0.4
+  ) +
+  geom_smooth(
+    method = "lm",
+    color = "red",
+    se = FALSE
+  ) +
   labs(
     title = "Age vs Length of Stay",
     x = "Age",
     y = "Length of Stay",
     caption = "Relationship between age and LOS"
-  )
+  ) +
+  my_theme
 
-#9 ICU Patients by Month 
-df %>%
+ggsave("ploteight.png", ploteight)
+
+# 9. ICU Patients by Month
+plotnine <- df %>%
   group_by(moa) %>%
-  summarise(icu_total = sum(as.numeric(icu), na.rm = TRUE)) %>%
+  summarise(
+    icu_total = sum(as.numeric(icu), na.rm = TRUE)
+  ) %>%
   ggplot(aes(x = factor(moa), y = icu_total)) +
-  geom_col() +
+  geom_col(fill = "steelblue") +
   labs(
     title = "ICU Patients by Month",
     x = "Admission Month",
     y = "ICU Count",
     caption = "ICU use by admission month"
-  )
-#10 Top Ten Providers by Number of Patients 
+  ) +
+  my_theme
 
-df %>%
+ggsave("plotnine.png", plotnine)
+
+# 10. Top 10 Providers by Patient Count
+plotten <- df %>%
   count(provider, sort = TRUE) %>%
   head(10) %>%
-  ggplot(aes(x = reorder(provider, n), y = n)) +
-  geom_col() +
+  ggplot(aes(
+    x = reorder(provider, n),
+    y = n
+  )) +
+  geom_col(fill = "steelblue") +
   coord_flip() +
   labs(
     title = "Top 10 Providers by Patient Count",
     x = "Provider",
     y = "Number of Patients",
     caption = "Providers with the highest patient volume"
-  )
+  ) +
+  my_theme
 
+ggsave("plotten.png", plotten)
 ```
 
 
@@ -403,7 +472,7 @@ plot_data <- df %>%
   filter(sex %in% c("1", "2")) %>%
   count(moa, sex)
 
-ggplot(plot_data,
+animationplot <- ggplot(plot_data,
        aes(x = sex, y = n, fill = sex)) +
   geom_col() +
   labs(
@@ -413,6 +482,7 @@ ggplot(plot_data,
     caption = "Admissions by sex over time"
   ) +
   transition_states(moa)
+ggsave(filename = 'animationplot.png', plot = animationplot)
 ```
 
 
@@ -589,8 +659,6 @@ knn_fit <- train(
 plot(tree_fit)
 plot(knn_fit)
 
-
-
 ```
 
 
@@ -645,12 +713,13 @@ library(dplyr)
 library(caret)
 library(rpart)
 library(rpart.plot)
+library(ggplot2)
 
 # Create new dataset and target variable
 df2 <- df %>%
   filter(raceethn != "", admtype != "") %>%
-  select(age, sex, raceethn, provider, moa, mod,
-         admtype, campus, los) %>%
+  select(los, age, sex, raceethn, provider, moa, mod,
+         admtype, campus) %>%
   na.omit() %>%
   mutate(
     los_level = ifelse(los < median(los), "short", "long"),
@@ -664,8 +733,7 @@ df2 <- df %>%
     admtype = factor(admtype),
     campus = factor(campus),
 
-    age = as.numeric(age),
-    los = as.numeric(los)
+    age = as.numeric(age)
   )
 
 # 10% Train / 90% Test Split
@@ -679,30 +747,6 @@ train_index <- createDataPartition(
 
 train_data <- df2[train_index, ]
 test_data <- df2[-train_index, ]
-
-# Variable Importance for LOS Decision Tree
-importance <- data.frame(
-  Variable = names(tree_fit$finalModel$variable.importance),
-  Importance = tree_fit$finalModel$variable.importance
-)
-
-importance <- importance[order(-importance$Importance), ]
-
-# Plot variable importance
-library(ggplot2)
-
-ggplot(importance,
-       aes(x = reorder(Variable, Importance),
-           y = Importance)) +
-  geom_col(fill = "steelblue") +
-  coord_flip() +
-  labs(
-    title = "Variable Importance for Length of Stay Prediction",
-    x = "Variable",
-    y = "Importance"
-  ) +
-  theme_minimal()
-
 
 # 5-Fold Cross Validation
 ctrl <- trainControl(
@@ -720,6 +764,29 @@ tree_fit <- train(
   tuneLength = 10
 )
 
+# Plot Decision Tree
+rpart.plot(tree_fit$finalModel)
+
+# Variable Importance
+importance <- data.frame(
+  Variable = names(tree_fit$finalModel$variable.importance),
+  Importance = tree_fit$finalModel$variable.importance
+)
+
+importance <- importance[order(-importance$Importance), ]
+
+ggplot(importance,
+       aes(x = reorder(Variable, Importance),
+           y = Importance)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Variable Importance for LOS Level Prediction",
+    x = "Variable",
+    y = "Importance"
+  ) +
+  theme_minimal()
+
 # Model 2: KNN
 knn_fit <- train(
   los_level ~ age + sex + raceethn + provider +
@@ -734,7 +801,7 @@ knn_fit <- train(
 plot(tree_fit)
 plot(knn_fit)
 
-# Model Comparison
+# Compare the models
 results <- resamples(
   list(
     DecisionTree = tree_fit,
@@ -742,10 +809,14 @@ results <- resamples(
   )
 )
 
+# Summary of performance
 summary(results)
-bwplot(results)
 
-# Select Best Model
+# Visual comparison
+bwplot(results)
+dotplot(results)
+
+# Select Best Model Using Accuracy
 tree_acc <- max(tree_fit$results$Accuracy)
 knn_acc <- max(knn_fit$results$Accuracy)
 
@@ -769,9 +840,11 @@ conf_mat <- confusionMatrix(
 
 print(conf_mat)
 
-cat("Test Accuracy:",
-    round(conf_mat$overall["Accuracy"] * 100, 2),
-    "%\n")
+cat(
+  "Test Accuracy:",
+  round(conf_mat$overall["Accuracy"] * 100, 2),
+  "%\n"
+)
 ```
 
 
