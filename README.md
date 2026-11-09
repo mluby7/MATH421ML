@@ -17,3 +17,4 @@ Assignments for class:
 [Assignment 12](assignment12.html)
 [Midterm Code File](Midterm.html)
 [Midterm Presentation](midtermpresentation.html)
+[Question One Dashboard Setup](QuestionOneDashboard.html)

@@ -1,0 +1,77 @@
+---
+title: "QuestionOneDashboard"
+format: dashboard
+editor: visual
+---
+
+# Page 1
+
+##  {.sidebar}
+
+Text in the sidebar.
+
+## Column {width="50%"}
+
+### Card 1
+
+```{r}
+
+```
+
+## Column {width="50%"}
+
+### Card 2
+
+```{r}
+
+```
+
+### Card 3
+
+```{r}
+
+```
+
+# Page 2
+
+### Card 4
+
+```{r}
+
+```
+
+# Page 1
+
+##  {.sidebar}
+
+Text in the sidebar.
+
+## Column {width="50%"}
+
+### Card 1
+
+```{r}
+
+```
+
+## Column {width="50%"}
+
+### Card 2
+
+```{r}
+
+```
+
+### Card 3
+
+```{r}
+
+```
+
+# Page 2
+
+### Card 4
+
+```{r}
+
+```
